@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import net.ivanvega.audiolibrosv22018.fragments.SelectorFragment;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -17,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_main);
+        setContentView(R.layout.content_mainv1);
 
-        Aplicacion app = (Aplicacion) getApplication();
+        /*Aplicacion app = (Aplicacion) getApplication();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         //recyclerView.setAdapter(app.getAdaptador());
         //layoutManager = new LinearLayoutManager(this);
@@ -33,7 +35,16 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adp);
         layoutManager = new GridLayoutManager(this,2, GridLayoutManager.HORIZONTAL , false);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);*/
+
+        if ((findViewById(R.id.contenedor_pequeno) != null) &&
+                (getSupportFragmentManager().findFragmentById(
+                        R.id.contenedor_pequeno) == null)){
+            SelectorFragment primerFragment = new SelectorFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.contenedor_pequeno, primerFragment).commit();
+        }
+
 
     }
 }
