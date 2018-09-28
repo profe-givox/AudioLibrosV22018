@@ -2,6 +2,7 @@ package net.ivanvega.audiolibrosv22018;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import net.ivanvega.audiolibrosv22018.fragments.DetalleFragment;
 import net.ivanvega.audiolibrosv22018.fragments.SelectorFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,4 +49,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void mostrarDetalle(int id) {
+        DetalleFragment detalleFragment = (DetalleFragment)
+                getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+        if (detalleFragment != null) {
+            detalleFragment.ponInfoLibro(id);
+        } else {
+            DetalleFragment nuevoFragment = new DetalleFragment();
+            Bundle args = new Bundle();
+            args.putInt(DetalleFragment.ARG_ID_LIBRO, id);
+            nuevoFragment.setArguments(args);
+            FragmentTransaction transaccion = getSupportFragmentManager()
+                    .beginTransaction();
+            transaccion.replace(R.id.contenedor_pequeno, nuevoFragment);
+            transaccion.addToBackStack(null);
+            transaccion.commit();
+        }
+    }
+
 }

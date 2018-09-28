@@ -17,6 +17,7 @@ import android.widget.Toast;
 import net.ivanvega.audiolibrosv22018.AdaptadorLibros;
 import net.ivanvega.audiolibrosv22018.Aplicacion;
 import net.ivanvega.audiolibrosv22018.Libro;
+import net.ivanvega.audiolibrosv22018.MainActivity;
 import net.ivanvega.audiolibrosv22018.R;
 
 import java.util.Vector;
@@ -60,6 +61,8 @@ public class SelectorFragment extends Fragment
                 Toast.makeText(actividad, "Seleccionado el elemento: "
                                 + recyclerView.getChildAdapterPosition(v),
                         Toast.LENGTH_SHORT).show();
+                ((MainActivity) actividad).mostrarDetalle(
+                        recyclerView.getChildAdapterPosition(v));
             }
         });
         return vista;
