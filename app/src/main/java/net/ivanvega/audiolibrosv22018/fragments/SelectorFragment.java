@@ -1,8 +1,11 @@
 package net.ivanvega.audiolibrosv22018.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,6 +66,40 @@ public class SelectorFragment extends Fragment
                         Toast.LENGTH_SHORT).show();
                 ((MainActivity) actividad).mostrarDetalle(
                         recyclerView.getChildAdapterPosition(v));
+            }
+        });
+        adaptador.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+
+                final int id = recyclerView.getChildAdapterPosition(v);
+                AlertDialog.Builder menu = new AlertDialog.Builder(actividad);
+                CharSequence[] opciones = { "Compartir", "Borrar ", "Insertar" };
+                menu.setItems(opciones, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int opcion) {
+                        switch (opcion) {
+                            case 0: //Compartir
+                                Libro libro = vectorLibros.elementAt(id);
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/plain");
+                                i.putExtra(Intent.EXTRA_SUBJECT, libro.titulo);
+                                i.putExtra(Intent.EXTRA_TEXT, libro.urlAudio);
+                                startActivity(Intent.createChooser(i, "Compartir"));
+                                break;
+                            case 1: //Borrar
+                                vectorLibros.remove(id);
+                                adaptador.notifyDataSetChanged();
+                                break;
+                            case 2: //Insertar
+                                vectorLibros.add(vectorLibros.elementAt(id));
+                                adaptador.notifyDataSetChanged();
+                                break;
+                        }
+                    }
+                });
+                menu.create().show();
+                return true;
             }
         });
         return vista;
